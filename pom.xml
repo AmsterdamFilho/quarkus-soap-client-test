@@ -23,8 +23,6 @@
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <cxf.version>3.4.0</cxf.version>
         <cxf.sourceRoot>${project.build.directory}/generated-sources/annotations</cxf.sourceRoot>
-        <jakarta.xml.ws-api.version>2.3.3</jakarta.xml.ws-api.version>
-        <jakarta.jws-api.version>1.1.1</jakarta.jws-api.version>
     </properties>
 
     <dependencyManagement>
@@ -42,7 +40,7 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-arc</artifactId>
+            <artifactId>quarkus-jaxb</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -62,22 +60,6 @@
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-        <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jakarta.jws-api</artifactId>
-            <version>${jakarta.jws-api.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.xml.ws</groupId>
-            <artifactId>jakarta.xml.ws-api</artifactId>
-            <version>${jakarta.xml.ws-api.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>jakarta.xml.bind</groupId>
-                    <artifactId>jakarta.xml.bind-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
     </dependencies>
 
     <build>
@@ -89,13 +71,12 @@
                 <executions>
                     <execution>
                         <id>generate-sources</id>
-                        <phase>none</phase>
+                        <phase>generate-sources</phase>
                         <configuration>
-                            <wsdlOptions>
-                                <wsdlOption>
-                                    <wsdl>${basedir}/src/main/resources/wsdl/*.wsdl</wsdl>
-                                </wsdlOption>
-                            </wsdlOptions>
+                            <wsdlRoot>${project.basedir}/src/main/resources/wsdl</wsdlRoot>
+                            <includes>
+                                <include>*.wsdl</include>
+                            </includes>
                         </configuration>
                         <goals>
                             <goal>wsdl2java</goal>
