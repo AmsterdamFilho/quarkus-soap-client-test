@@ -1,11 +1,13 @@
 # quarkus-soap-client-test
 
-This repository is intended to test the if Quarkus can consume a SOAP web service. It reuses same working code, without Quarkus, from this repository:
+Steps to check the code failing in Quarkus:
 
-https://github.com/vicziani/learnwebservices
+1. Compile the quarkus application with mvn:compile
+2. Run the application in dev mode
+3. Open the swagger-ui
+4. Execute the endpoints
 
-It exposes a rest api that redirects requests to some public soap web service. The master branch uses JAX-WS RI client and the cxf branch uses CXF client.
+Steps to check the code working in Java SE:
 
-It is necessary to execute the plugin jaxws-maven-plugin:wsimport or cfx-codegen:wsdl2java (depending on the branch) before running the application.
-
-The application can be tested using swagger-ui in dev mode.
+1. Compile the application with mvn:compile
+2. Run the main class

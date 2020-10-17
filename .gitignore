@@ -31,4 +31,5 @@ nb-configuration.xml
 *~*
 
 # Compiled files
-target/
+javase/target
+quarkus/target
