@@ -5,6 +5,8 @@ import com.dataaccess.webservicesserver.NumberConversionSoapType;
 import com.learnwebservices.services.hello.HelloEndpoint;
 import com.learnwebservices.services.hello.HelloEndpointService;
 import com.learnwebservices.services.hello.HelloRequest;
+import de.mathertel.ortelookup.OrteLookup;
+import de.mathertel.ortelookup.OrteLookupSoap;
 
 import java.math.BigInteger;
 import java.net.MalformedURLException;
@@ -14,13 +16,17 @@ public class HelloMain {
 
     public static void main(String[] args) throws MalformedURLException {
         URL url = new URL("http://www.dataaccess.com/webservicesserver/numberconversion.wso?WSDL");
-        NumberConversionSoapType port1 = new NumberConversion(url).getNumberConversionSoap();
-        System.out.println(port1.numberToWords(BigInteger.valueOf(12301L)));
+        NumberConversionSoapType numberConversion = new NumberConversion(url).getNumberConversionSoap();
+        System.out.println(numberConversion.numberToWords(BigInteger.valueOf(12301L)));
 
         url = new URL("http://www.learnwebservices.com/services/hello?wsdl");
-        HelloEndpoint port2 = new HelloEndpointService(url).getHelloEndpointPort();
+        HelloEndpoint hello = new HelloEndpointService(url).getHelloEndpointPort();
         HelloRequest helloRequest = new HelloRequest();
         helloRequest.setName("max johnson");
-        System.out.println(port2.sayHello(helloRequest).getMessage());
+        System.out.println(hello.sayHello(helloRequest).getMessage());
+
+        url = new URL("http://mathertel.de/AJAXEngine/S02_AJAXCoreSamples/OrteLookup.asmx?wsdl");
+        OrteLookupSoap orteLookup = new OrteLookup(url).getOrteLookupSoap12();
+        System.out.println(orteLookup.orteStartWith("ber"));
     }
 }

@@ -5,6 +5,8 @@ import com.dataaccess.webservicesserver.NumberConversionSoapType;
 import com.learnwebservices.services.hello.HelloEndpoint;
 import com.learnwebservices.services.hello.HelloEndpointService;
 import com.learnwebservices.services.hello.HelloRequest;
+import de.mathertel.ortelookup.OrteLookup;
+import de.mathertel.ortelookup.OrteLookupSoap;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.ws.rs.POST;
@@ -30,6 +32,15 @@ public class SoapResource {
         HelloRequest helloRequest = new HelloRequest();
         helloRequest.setName(name);
         return port.sayHello(helloRequest).getMessage();
+    }
+
+    @POST
+    @Path("places-lookup/{prefix}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String placesLookup(@PathParam("prefix") String prefix) throws MalformedURLException {
+        URL url = new URL("http://mathertel.de/AJAXEngine/S02_AJAXCoreSamples/OrteLookup.asmx?wsdl");
+        OrteLookupSoap orteLookup = new OrteLookup(url).getOrteLookupSoap();
+        return orteLookup.orteStartWith(prefix);
     }
 
     @POST
